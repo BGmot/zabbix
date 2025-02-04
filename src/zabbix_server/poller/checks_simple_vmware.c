@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2024 Zabbix SIA
+** Copyright (C) 2001-2025 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -2310,7 +2310,7 @@ int	check_vcenter_hv_network_linkspeed(AGENT_REQUEST *request, const char *usern
 	if (FAIL == (i = zbx_vector_vmware_pnic_bsearch(&hv->pnics, &nic_cmp, vmware_pnic_compare)))
 	{
 		SET_MSG_RESULT(result, zbx_strdup(NULL, "Unknown physical network interface name"));
-		goto out;
+		goto unlock;
 	}
 
 	SET_UI64_RESULT(result, hv->pnics.values[i]->speed);

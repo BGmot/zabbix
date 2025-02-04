@@ -1,6 +1,6 @@
 /*
 ** Zabbix
-** Copyright (C) 2001-2024 Zabbix SIA
+** Copyright (C) 2001-2025 Zabbix SIA
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -264,6 +264,7 @@ static int	pp_excute_jsonpath_query(zbx_pp_cache_t *cache, zbx_variant_t *value,
 	else
 	{
 		zbx_jsonobj_t	*obj;
+		int		ret;
 
 		if (NULL == (obj = (zbx_jsonobj_t *)cache->data))
 		{
@@ -283,13 +284,14 @@ static int	pp_excute_jsonpath_query(zbx_pp_cache_t *cache, zbx_variant_t *value,
 			cache->data = (void *)obj;
 		}
 
-		if (FAIL == zbx_jsonobj_query(obj, params, &data))
+		ret = zbx_jsonobj_query(obj, params, &data);
+		zbx_jsonobj_disable_indexing(obj);
+
+		if (FAIL == ret)
 		{
 			*errmsg = zbx_strdup(*errmsg, zbx_json_strerror());
 			return FAIL;
 		}
-
-		zbx_jsonobj_disable_indexing(obj);
 	}
 
 	if (NULL == data)
