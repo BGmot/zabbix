@@ -54,6 +54,7 @@ func getMountPaths() (paths []string, err error) {
 		for {
 			if err = windows.GetVolumePathNamesForVolumeName(&volume[0], &buffer[0], uint32(len(buffer)), &size); err != nil {
 				if err.(syscall.Errno) != syscall.ERROR_MORE_DATA {
+					err = errs.Wrapf(err, "Cannot obtain a list of filesystems. Volume: %s Error", windows.UTF16ToString(volume))
 					return
 				}
 				buffer = make([]uint16, size)

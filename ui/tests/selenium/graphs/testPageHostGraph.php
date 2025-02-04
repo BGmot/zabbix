@@ -90,7 +90,9 @@ class testPageHostGraph extends CLegacyWebTest {
 		$count_graphs = CDBHelper::getCount($sql);
 
 		foreach ($breadcrumbs as $url => $text) {
-			$this->zbxTestAssertElementPresentXpath('//a[@href="'.$url.'"][text()="'.$text.'"]');
+			$this->assertTrue($this->query('xpath://a[@href='.CXPathHelper::escapeQuotes($url).
+					'][text()='.CXPathHelper::escapeQuotes($text).']')->one()->isVisible()
+			);
 
 			// Check item and graph count.
 			if ($text === 'Items' || $text === 'Graphs') {
@@ -737,20 +739,22 @@ class testPageHostGraph extends CLegacyWebTest {
 		$filter->submit();
 
 		if ($data['host'] === 'all') {
-			$this->zbxTestAssertElementPresentXpath(
-					'//button[@id="form"][@disabled][text()="Create graph (select host first)"]'
+			$this->assertTrue($this->query('xpath://button[@id="form"][@disabled][text()="Create graph (select host first)"]')
+					->one()->isVisible()
 			);
 		}
 
 		if (array_key_exists('graph', $data)) {
 			foreach ($data['graph'] as $graph) {
-				$this->zbxTestAssertElementPresentXpath(
-						'//a[contains(@href,"graphs.php?form=update")][text()="'.$graph.'"]'
+				$this->assertTrue($this->query('xpath://a[contains(@href,"graphs.php?form=update")][text()='.
+						CXPathHelper::escapeQuotes($graph).']')->one()->isVisible()
 				);
 			}
 		}
 		else {
-			$this->zbxTestAssertElementPresentXpath('//tr[@class="nothing-to-show"]/td[text()="No data found."]');
+			$this->assertTrue($this->query('xpath://tr[@class="nothing-to-show"]/td[text()="No data found."]')
+					->one()->isVisible()
+			);
 		}
 	}
 

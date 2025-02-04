@@ -43,6 +43,15 @@ class testTemplateInheritance extends CLegacyWebTest {
 	 */
 	protected $hostName = 'Template inheritance test host';
 
+	/**
+	 * Attach MessageBehavior to the test.
+	 *
+	 * @return array
+	 */
+	public function getBehaviors() {
+		return ['class' => CMessageBehavior::class];
+	}
+
 	public function testTemplateInheritance_linkHost(){
 		$sql = "select hostid from hosts where host='Linux by Zabbix agent';";
 		$this->assertEquals(1, CDBHelper::getCount($sql));
@@ -120,8 +129,8 @@ class testTemplateInheritance extends CLegacyWebTest {
 		$this->zbxTestInputTypeOverwrite('trends', '55d');
 		$this->zbxTestInputType('description', 'description');
 		$this->assertTrue($this->zbxTestCheckboxSelected('status'));
-
-		$this->zbxTestDoubleClickBeforeMessage('add', 'filter_name');
+		$this->query('xpath://div[contains(@class, tfoot-buttons)]/button[@id="add"]')->waitUntilClickable()->one()->click();
+		$this->assertMessage($result);
 
 		switch ($result) {
 			case TEST_GOOD:
@@ -261,7 +270,7 @@ class testTemplateInheritance extends CLegacyWebTest {
 		$this->zbxTestLaunchOverlayDialog('Items');
 		$this->zbxTestClickLinkText('testInheritanceItem1');
 		$this->zbxTestClickWait('add');
-		$this->zbxTestTextPresent('Graph added');
+		$this->assertMessage(TEST_GOOD, 'Graph added');
 
 		// check that the inherited graph matches the original
 		$this->zbxTestOpen(self::HOST_LIST_PAGE);
@@ -494,7 +503,7 @@ class testTemplateInheritance extends CLegacyWebTest {
 		$this->zbxTestTextPresent($this->templateName.': testInheritanceItem1');
 
 		$this->zbxTestClickWait('add');
-		$this->zbxTestTextPresent('Graph prototype added');
+		$this->assertMessage(TEST_GOOD, 'Graph prototype added');
 		$this->zbxTestTextPresent('Test LLD graph');
 
 		// check that the inherited graph matches the original

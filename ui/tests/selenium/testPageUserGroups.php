@@ -203,10 +203,14 @@ class testPageUserGroups extends CLegacyWebTest {
 		$this->zbxTestLogin('zabbix.php?action=usergroup.list');
 		$this->zbxTestInputTypeOverwrite('filter_name', '1928379128ksdhksdjfh');
 		$this->zbxTestClickButtonText('Apply');
-		$this->zbxTestAssertElementText("//div[@class='table-stats']", 'Displaying 0 of 0 found');
+		$this->assertTrue($this->query('xpath://div[@class="table-stats"][text()="Displaying 0 of 0 found"]')
+				->one()->isVisible()
+		);
 		$this->zbxTestInputTypeOverwrite('filter_name', '%');
 		$this->zbxTestClickButtonText('Apply');
-		$this->zbxTestAssertElementText("//div[@class='table-stats']", 'Displaying 0 of 0 found');
+		$this->assertTrue($this->query('xpath://div[@class="table-stats"][text()="Displaying 0 of 0 found"]')
+				->one()->isVisible()
+		);
 	}
 
 	public function testPageUserGroups_FilterByStatus() {
@@ -214,7 +218,9 @@ class testPageUserGroups extends CLegacyWebTest {
 		$this->zbxTestInputTypeOverwrite('filter_name', 'Zabbix administrators');
 		$this->zbxTestClickXpathWait("//label[@for='filter_user_status_1']");
 		$this->zbxTestClickButtonText('Apply');
-		$this->zbxTestAssertElementPresentXpath("//div[@class='table-stats'][text()='Displaying 1 of 1 found']");
+		$this->assertTrue($this->query('xpath://div[@class="table-stats"][text()="Displaying 1 of 1 found"]')
+				->one()->isVisible()
+		);
 	}
 
 	public function testPageUserGroups_FilterReset() {

@@ -59,7 +59,7 @@ class testPageTemplates extends CLegacyWebTest {
 		$filter->getField('Template groups')->select('Templates/SAN');
 		$filter->submit();
 		$table->waitUntilReloaded();
-		$this->zbxTestTextPresent($this->templateName);
+		$this->assertTrue($this->query('link', $this->templateName)->one()->isVisible());
 
 		$headers = ['', 'Name', 'Hosts', 'Items', 'Triggers', 'Graphs', 'Dashboards', 'Discovery', 'Web', 'Vendor',
 				'Version', 'Linked templates', 'Linked to templates', 'Tags'

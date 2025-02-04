@@ -259,7 +259,9 @@ class testFormTriggerPrototype extends CLegacyWebTest {
 
 		$this->zbxTestCheckTitle('Configuration of trigger prototypes');
 		$this->zbxTestCheckHeader('Trigger prototypes');
-		$this->zbxTestAssertElementPresentXpath("//a[@id='tab_triggersTab' and text()='Trigger prototype']");
+		$this->assertTrue($this->query('xpath://a[@id="tab_triggersTab" and text()="Trigger prototype"]')
+				->one()->isVisible()
+		);
 
 		if (isset($data['constructor'])) {
 			switch ($data['constructor']) {
@@ -271,9 +273,11 @@ class testFormTriggerPrototype extends CLegacyWebTest {
 					$this->zbxTestClickButtonText('Close expression constructor');
 					break;
 			}
-		}
 
-		$this->zbxTestTextPresent('Trigger prototype');
+			$this->assertTrue($this->query('xpath://a[@id="tab_triggersTab" and text()="Trigger prototype"]')
+					->one()->isVisible()
+			);
+		}
 
 		if (isset($data['templatedHost'])) {
 			$this->zbxTestTextPresent('Parent triggers');
@@ -873,11 +877,15 @@ class testFormTriggerPrototype extends CLegacyWebTest {
 				$this->assertMessage(TEST_BAD, $constructor['errors']['header'], $constructor['errors']['details']);
 			}
 			else {
-				$this->zbxTestAssertElementPresentXpath("//button[@name='test_expression']");
-
-				$this->zbxTestAssertVisibleXpath("//li[@id='expression_row']//button[contains(@onclick, 'and_expression') and text()='And']");
-				$this->zbxTestAssertVisibleXpath("//li[@id='expression_row']//button[contains(@onclick, 'or_expression') and text()='Or']");
-				$this->zbxTestAssertElementPresentXpath("//button[text()='Remove']");
+				$queries = [
+					'xpath://button[@name="test_expression"]',
+					'xpath://li[@id="expression_row"]//button[contains(@onclick, "and_expression") and text()="And"]',
+					'xpath://li[@id="expression_row"]//button[contains(@onclick, "or_expression") and text()="Or"]',
+					'xpath://button[text()="Remove"]'
+				];
+				foreach ($queries as $query) {
+					$this->assertTrue($this->query($query)->one()->isVisible());
+				}
 
 				if (isset($constructor['text'])) {
 					foreach($constructor['text'] as $txt) {

@@ -415,7 +415,7 @@ class testTagBasedPermissions extends CLegacyWebTest {
 			// Apply filter
 			$this->query('name:filter_apply')->one()->click();
 			$table->waitUntilReloaded();
-			$this->zbxTestTextPresent($name);
+			$this->assertTrue($this->query('link', $name)->one()->isVisible());
 			$this->zbxTestAssertElementText("//div[@class='table-stats']", 'Displaying 1 of 1 found');
 			// Reset filter.
 			$this->zbxTestClickButtonText('Reset');
