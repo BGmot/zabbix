@@ -62,7 +62,7 @@ Patch Zabbix server:
 1. If not already done then fresh install from sources using this repository, follow [this guide](https://www.zabbix.com/documentation/current/manual/installation/install)
 2. Login into the Zabbix server as `root`, download this script (pay attention that version of your Zabbix Server - 6.0.40 in this example - matches this repository version/tag - 6.0.40-bg):
 ```
-curl -L -o bg-features-install.sh https://raw.githubusercontent.com/BGmot/zabbix/6.0.-bg/bg-scripts/bg-features-install.sh
+curl -L -o bg-features-install.sh https://raw.githubusercontent.com/BGmot/zabbix/6.0.40-bg/bg-scripts/bg-features-install.sh
 ```
 3. Make sure zip package is installed (the script needs to be able to run unzip)
 4. Modify the script to provide proper values for DB_HOST, DB_USERNAME, DB_PASSWORD and ZABBIX_INSTALL_PATH (where all your php files located) and run the script:
