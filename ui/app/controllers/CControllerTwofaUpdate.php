@@ -9,7 +9,6 @@ class CControllerTwofaUpdate extends CController {
 	protected function init() {
 		$this->response = new CControllerResponseRedirect((new CUrl('zabbix.php'))
 			->setArgument('action', 'twofa.edit')
-			->getUrl()
 		);
 
 		$this->disableSIDValidation();

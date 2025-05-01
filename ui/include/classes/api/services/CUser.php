@@ -1717,15 +1717,11 @@ class CUser extends CApiService {
 			}
 		}
 
-		$user_data = $this->findAccessibleUser($user['username'],
-			(CAuthenticationHelper::get(CAuthenticationHelper::LDAP_CASE_SENSITIVE) == ZBX_AUTH_CASE_SENSITIVE),
-			CAuthenticationHelper::get(CAuthenticationHelper::AUTHENTICATION_TYPE), true
-		);
-
-		if (array_key_exists('error', $user_data)) {
-			self::addAuditLogByUser(array_key_exists('db_user', $user_data) ? $user_data['db_user']['userid'] : null,
-				CWebUser::getIp(), $user['username'], CAudit::ACTION_LOGIN_FAILED, CAudit::RESOURCE_USER
-			);
+		try {
+			$db_user = $this->findAccessibleUser($user['username'],
+				(CAuthenticationHelper::get(CAuthenticationHelper::LDAP_CASE_SENSITIVE) == ZBX_AUTH_CASE_SENSITIVE),
+				CAuthenticationHelper::get(CAuthenticationHelper::AUTHENTICATION_TYPE), true
+		        );
 		}
 		catch (APIException $e) {
 			self::addAuditLogByUser(null, CWebUser::getIp(), $user['username'], CAudit::ACTION_LOGIN_FAILED,
