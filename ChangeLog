@@ -1,3 +1,27 @@
+Changes for 6.0.41
+
+6.0.41rc1 was released as 6.0.41 without any changes
+
+--------------------------------------------------------------------------------
+Changes for 6.0.41rc1
+
+New features:
+A......PS. [ZBXNEXT-10056] updated maximum supported MariaDB version to 11.8 (Sasha)
+........S. [ZBXNEXT-10122] updated maximum supported TimescaleDB version to 2.21 (mprihodko)
+........S. [ZBXNEXT-10018] updated maximum supported TimescaleDB version to 2.20 (mprihodko)
+........S. [ZBXNEXT-9905] updated maximum supported TimescaleDB version to 2.19 (mprihodko)
+
+Bug fixes:
+........S. [ZBX-26775] fixed crash on data processing from system.localtime item key (sboidenko)
+.......PS. [ZBX-26528] fixed improper handling of long or corrupted ODBC error messages (dgoloscapov)
+........S. [ZBX-26591] fixed detection of read-only state in PostgreSQL replicated database (sboidenko)
+........S. [ZBX-26486] fixed errors in Zabbix server log on second and subsequent server starts with TimescaleDB (mprihodko)
+.......PS. [ZBX-26529] fixed memory leak when global variables are used in JavaScript preprocessing (vso)
+...G...... [ZBX-26344] refactored zbxcmd execute to avoid Windows syscalls in Zabbix agent 2 (esneiders)
+.......PS. [ZBX-26433] fixed values outside of history storage period causing trigger to cache all values in storage period (vso)
+...G...... [ZBX-26244] fixed Zabbix agent 2 memory leak related to traffic compression (MVekslers)
+
+--------------------------------------------------------------------------------
 Changes for 6.0.40
 
 6.0.40rc1 was released as 6.0.40 without any changes
@@ -3443,12 +3467,15 @@ A......... [ZBX-17955] fixed "medias" parameter named inconsistency in user.crea
 .......PS. [ZBX-17548] don't store text items with history 0 in proxy history (wiper)
 
 --------------------------------------------------------------------------------
+Changes for 5.0.47
+
+5.0.47rc1 was released as 5.0.47 without any changes
+
+--------------------------------------------------------------------------------
 Changes for 5.0.47rc1
 
-New features:
-
 Bug fixes:
-...G...PS. [ZBX-26080] fixed old file descriptors being hold when external log rotation is used (dgoloscapov)
+...G...PS. [ZBX-26080] fixed old file descriptors being held when external log rotation is used (dgoloscapov)
 A......... [ZBX-26023] restored ability for users to get all alerts within same user group (jfreibergs)
 
 --------------------------------------------------------------------------------
